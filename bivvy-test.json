@@ -1,0 +1,74 @@
+{
+	"units": "inches",
+	"bevelObject": "1/2 inch EMT",
+	"origin": {
+		"x": 0,
+		"y": 0,
+		"z": 0
+	},
+	"path": [
+		{
+			"point": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			},
+			"angle": {
+				"phi": 0,
+				"theta": 180
+			},
+			"type": "cut"
+		},
+		{
+			"point": {
+				"x": 0,
+				"y": 0,
+				"z": -20
+			},
+			"angle": {
+				"phi": 0,
+				"theta": 135
+			},
+			"type": "arc",
+			"radius": 5
+		},
+		{
+			"point": {
+				"x": 12,
+				"y": 0,
+				"z": -32
+			},
+			"angle": {
+				"phi": 180,
+				"theta": 90
+			},
+			"type": "arc",
+			"radius": 5
+		},
+		{
+			"point": {
+				"x": -6,
+				"y": 0,
+				"z": -32
+			},
+			"angle": {
+				"phi": 90,
+				"theta": 90
+			},
+			"type": "arc",
+			"radius": 5
+		},
+		{
+			"point": {
+				"x": -6,
+				"y": 20,
+				"z": -32
+			},
+			"angle": {
+				"phi": 90,
+				"theta": 90
+			},
+			"type": "cut"
+		}
+	]
+}
