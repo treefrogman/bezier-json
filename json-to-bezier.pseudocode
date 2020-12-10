@@ -1,14 +1,18 @@
 for each point
-	find the plane shared with the previous and next point
+x	find the plane shared with the previous and next point
 		http://kitchingroup.cheme.cmu.edu/blog/2015/01/18/Equation-of-a-plane-through-three-points/
-	find the circle of specified radius that sits tangent to both lines
+x	transform the three points from the plane to 2d coordinates
+		https://stackoverflow.com/questions/49769459/convert-points-on-a-3d-plane-to-2d-coordinates
+x	find the circle of specified radius that sits tangent to both lines
 		https://stackoverflow.com/questions/51223685/create-circle-tangent-to-two-lines-with-radius-r-geometry
-		that's 2d. how do i do it in 3d?
-			https://stackoverflow.com/questions/49769459/convert-points-on-a-3d-plane-to-2d-coordinates
-	find the point on each line that sits tangent to that circle
+		there are actually four circles
+			find which center point is closer to both of the previous/next point
+				that is, minimize the sum of the distance from the center of the circle to each of the surrounding points
+x	find the point on each line that sits tangent to that circle
 		see previous
-	generate bezier points and handles to approximate the arc from one line to the other
+x	generate bezier points and handles to approximate the arc from one line to the other
 		https://stackoverflow.com/a/26774423/2683626
-		license? my project is for personal use, but keep in mind
+x	transform the bezier points from 2d coordinates to the original plane
+
 create a curve object from the bezier points
 	https://behreajj.medium.com/scripting-curves-in-blender-with-python-c487097efd13
