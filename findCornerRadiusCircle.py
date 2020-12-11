@@ -4,6 +4,7 @@ from Arc import Arc
 import json
 import svgwrite
 import math
+from BlenderBezier import BlenderBezier
 
 def perpendicularTowardPoint(p1, p2):
 	perpendicular = np.array([p1[1], -p1[0]])
@@ -39,8 +40,14 @@ print(data)
 
 dwg = svgwrite.Drawing('test2.svg', profile='full', viewBox="-20 -20 40 40")
 
+blenderPath BlenderBezier()
+
 for i, point in enumerate(data['points']):
-	if i == 0 or i == len(data['points']) - 1:
+	if i == 0:
+		blenderPath.moveTo(point)
+		continue
+	if i == len(data['points']) - 1:
+		blenderPath.lineTo(point)
 		continue
 	p1 = np.array(data['points'][i - 1])
 	p2 = np.array(point)
@@ -54,21 +61,7 @@ for i, point in enumerate(data['points']):
 	arc = findCornerRadiusArc(uvP1, uvP3, data['bendRadius'])
 	beziers = arc.approximateAsBezierCurves()
 
+	blenderPath.lineTo(uvPlane.UVToXYZ(beziers[0][0]))
 
-	commands = list()
 	for i, bezier in enumerate(beziers):
-		if i == 0:
-			commands.append("M" + ",".join(map("{:.6f}".format, bezier[0])))
-		commands.append("C" + " ".join(map(lambda pt: ",".join(map("{:.6f}".format, pt)), bezier[1:4])))
-
-	svgPath = " ".join(commands)
-	print(svgPath)
-
-	dwg.add(dwg.line(tuple(uvP1), (0, 0), stroke='black', stroke_width='.1'))
-	dwg.add(dwg.line(tuple(uvP3), (0, 0), stroke='black', stroke_width='.1'))
-	#dwg.add(dwg.circle(tuple(circleCenter), radius, stroke='black', stroke_width='.1', fill='none'))
-	dwg.add(dwg.path(d=str(svgPath), stroke='black', stroke_width='.1', fill='none'))
-
-dwg.save()
-
-#findCornerRadiusArc(np.array([10., -7.]), np.array([-10., -20.]), 5)
+		blenderPath.bezierTo(*map(uvPlane.UVToXYZ, bezier[1:]))
