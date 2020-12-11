@@ -60,21 +60,3 @@ def createUVCoordinateMapToPlaneIn3DSpaceFrom3Points(p1, p2, p3):
 	return UVCoordinateMapToPlaneIn3DSpace(p1, u, v)
 
 UVCoordinateMapToPlaneIn3DSpace.from3Points = createUVCoordinateMapToPlaneIn3DSpaceFrom3Points
-
-
-
-p1 = np.array([0, 0, 0])
-p2 = np.array([1, 1, 0])
-p3 = np.array([0, 1, 0])
-
-uvMap = UVCoordinateMapToPlaneIn3DSpace.from3Points(p1, p2, p3)
-
-print(uvMap)
-
-uv = uvMap.XYZToUV(np.array([0, 1, 0]))
-
-print(uv)
-
-xyz = uvMap.UVToXYZ(uv)
-
-print(xyz)

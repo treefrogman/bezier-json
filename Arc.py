@@ -48,15 +48,10 @@ class Arc:
 			curve = list()
 			for i in range(0, 4):
 				point = self.center + np.array([
-					np.round(self.radius * np.cross(templateBezier[i], sweepVector), 6),
-					np.round(self.radius * np.dot(templateBezier[i], sweepVector), 6)
+					self.radius * np.cross(templateBezier[i], sweepVector),
+					self.radius * np.dot(templateBezier[i], sweepVector)
 				])
 				curve.append(point)
 			curves.append(curve)
 
 		return curves
-
-arc = Arc(np.array([200, 200]), 100, math.pi * .3, -math.pi * 1.4)
-
-bezier = arc.approximateAsBezierCurves()
-print(bezier)
