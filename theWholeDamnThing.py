@@ -1,7 +1,6 @@
 import numpy as np
 import json
 import math
-import bpyPrint
 import bpy
 
 class BlenderBezier:
