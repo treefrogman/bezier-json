@@ -4,11 +4,15 @@ import math
 import bpy
 
 class BlenderBezier:
-	def __init__(self):
+	def __init__(self, objectName, origin, bevelRadius):
 		self.curve = bpy.data.curves.new('crv', 'CURVE')
 		self.curve.dimensions = '3D'
 		self.spline = self.curve.splines.new(type='BEZIER')
-		self.object = bpy.data.objects.new('object_name', self.curve)
+		self.object = bpy.data.objects.new(objectName, self.curve)
+		self.object.location = tuple(origin)
+		self.object.data.bevel_depth = bevelRadius
+		self.object.data.fill_mode = 'FULL'
+		self.object.data.bevel_resolution = 16
 		bpy.context.scene.objects.link(self.object)
 	def moveTo(self, point):
 		self.spline.bezier_points[0].co = tuple(point)
@@ -156,34 +160,36 @@ def findCornerRadiusArc(v1, v2, radius):
 
 	return arc
 
+def bendBivvyCartPart(data):
+	blenderPath = BlenderBezier(data["partName"], data["origin"], data["od"] / 2)
+	for i, point in enumerate(data['points']):
+		if i == 0:
+			blenderPath.moveTo(point)
+			continue
+		if i == len(data['points']) - 1:
+			blenderPath.lineTo(point)
+			continue
+		p1 = np.array(data['points'][i - 1])
+		p2 = np.array(point)
+		p3 = np.array(data['points'][i + 1])
+		# p2 is the first argument so it will be the origin (0, 0) of the UV plane
+		uvPlane = UVCoordinateMapToPlaneIn3DSpace.from3Points(p2, p1, p3)
+		uvP1 = uvPlane.XYZToUV(p1)
+		uvP2 = uvPlane.XYZToUV(p2)
+		uvP3 = uvPlane.XYZToUV(p3)
+		print(uvP1, uvP2, uvP3)
+		arc = findCornerRadiusArc(uvP1, uvP3, data['bendRadius'])
+		beziers = arc.approximateAsBezierCurves()
 
-with open('bivvy-test-simple.json') as json_file:
+		blenderPath.lineTo(uvPlane.UVToXYZ(beziers[0][0]))
+
+		for i, bezier in enumerate(beziers):
+			blenderPath.bezierTo(*map(uvPlane.UVToXYZ, bezier[1:]))
+
+
+
+with open('bivvyCart.json') as json_file:
 	data = json.load(json_file)
 
-print(data)
-
-blenderPath = BlenderBezier()
-
-for i, point in enumerate(data['points']):
-	if i == 0:
-		blenderPath.moveTo(point)
-		continue
-	if i == len(data['points']) - 1:
-		blenderPath.lineTo(point)
-		continue
-	p1 = np.array(data['points'][i - 1])
-	p2 = np.array(point)
-	p3 = np.array(data['points'][i + 1])
-	# p2 is the first argument so it will be the origin (0, 0) of the UV plane
-	uvPlane = UVCoordinateMapToPlaneIn3DSpace.from3Points(p2, p1, p3)
-	uvP1 = uvPlane.XYZToUV(p1)
-	uvP2 = uvPlane.XYZToUV(p2)
-	uvP3 = uvPlane.XYZToUV(p3)
-	print(uvP1, uvP2, uvP3)
-	arc = findCornerRadiusArc(uvP1, uvP3, data['bendRadius'])
-	beziers = arc.approximateAsBezierCurves()
-
-	blenderPath.lineTo(uvPlane.UVToXYZ(beziers[0][0]))
-
-	for i, bezier in enumerate(beziers):
-		blenderPath.bezierTo(*map(uvPlane.UVToXYZ, bezier[1:]))
+for part in data:
+	bendBivvyCartPart(part)
