@@ -2,7 +2,7 @@
 	{
 		"partName": "sidePanelL",
 		"od": 0.922,
-		"bendRadius": 3,
+		"bendRadius": 5.5,
 		"origin": [0, 27, 0],
 		"points": [
 			[0, 0, -8],
@@ -16,7 +16,7 @@
 	{
 		"partName": "sidePanelR",
 		"od": 0.922,
-		"bendRadius": 3,
+		"bendRadius": 5.5,
 		"origin": [0, 0, 0],
 		"points": [
 			[0, 0, -8],
@@ -30,7 +30,7 @@
 	{
 		"partName": "base",
 		"od": 0.922,
-		"bendRadius": 3,
+		"bendRadius": 5.5,
 		"origin": [0, 0, -16.922],
 		"points": [
 			[0, 13.5, 0],
@@ -44,7 +44,7 @@
 	{
 		"partName": "middleEnd",
 		"od": 0.922,
-		"bendRadius": 3,
+		"bendRadius": 5.5,
 		"origin": [48, 0, -16],
 		"points": [
 			[0, 13.5, 12],
@@ -58,7 +58,7 @@
 	{
 		"partName": "cotHead",
 		"od": 0.922,
-		"bendRadius": 3,
+		"bendRadius": 5.5,
 		"origin": [0, 0, 0.922],
 		"points": [
 			[40, 0, 0],
@@ -70,29 +70,32 @@
 	{
 		"partName": "cotFoldout",
 		"od": 0.922,
-		"bendRadius": 3,
-		"origin": [42, 0, 0.922],
+		"bendRadius": 5.5,
+		"origin": [46, 0, 1.383],
 		"points": [
 			[0, 0, 0],
-			[42, 0, 0],
-			[42, 27, 0],
+			[4, 0, -0.461],
+			[46, 0, -0.461],
+			[46, 27, -0.461],
+			[4, 27, -0.461],
 			[0, 27, 0]
 		]
 	},
 	{
 		"partName": "kickstand",
 		"od": 0.922,
-		"bendRadius": 3,
-		"origin": [96, 0, 0],
+		"bendRadius": 5.5,
+		"origin": [92, 0, 0],
 		"points": [
 			[0, 0, 0],
-			[0, 0, -20],
-			[12, 0, -32],
-			[-6, 0, -32],
-			[-6, 27, -32],
-			[12, 27, -32],
-			[0, 27, -20],
-			[0, 27, 0]
+			[0, 0, -27],
+			[21, 9, -27],
+			[-21, 18, -27],
+			[0, 27, -27],
+			[0, 27, 16],
+			[0, 13.5, 18],
+			[0, 0, 16],
+			[0, 0, 0]
 		]
 	}
 ]
